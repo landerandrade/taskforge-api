@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: taskforge-postgres
+    environment:
+      POSTGRES_DB: taskforge
+      POSTGRES_USER: taskforge
+      POSTGRES_PASSWORD: taskforge
+    ports:
+      - "5432:5432"
+    volumes:
+      - taskforge-data:/var/lib/postgresql/data
+
+volumes:
+  taskforge-data:
+    driver: local
