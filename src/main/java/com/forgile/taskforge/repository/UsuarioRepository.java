@@ -1,4 +1,8 @@
 package com.forgile.taskforge.repository;
 
-public class UsuarioRepository {
+import com.forgile.taskforge.model.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+
 }

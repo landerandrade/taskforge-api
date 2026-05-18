@@ -1,9 +1,8 @@
-CREATE TABLE tarefas
+CREATE TABLE usuarios
 (
-    id               BIGSERIAL PRIMARY KEY,
-    titulo           VARCHAR(255) NOT NULL,
-    descricao        TEXT,
-    status           VARCHAR(20)  NOT NULL DEFAULT 'PENDENTE',
-    data_criacao     TIMESTAMP    NOT NULL DEFAULT NOW(),
-    data_atualizacao TIMESTAMP    NOT NULL DEFAULT NOW()
+    id           BIGSERIAL PRIMARY KEY,
+    nome         VARCHAR(100) NOT NULL,
+    email        VARCHAR(150) NOT NULL UNIQUE,
+    senha        VARCHAR(255) NOT NULL,
+    data_criacao TIMESTAMP    NOT NULL DEFAULT NOW()
 );
