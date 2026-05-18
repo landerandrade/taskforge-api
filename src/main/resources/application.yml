@@ -5,7 +5,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/taskforge
     username: taskforge
     password: taskforge
-
   jpa:
     hibernate:
       ddl-auto: validate
@@ -13,6 +12,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+jwt:
+  secret: forgile-taskforge-secret-key-minimo-256-bits-para-hmac-sha256-ok
+  expiration-ms: 86400000
 
 server:
   port: 8080
