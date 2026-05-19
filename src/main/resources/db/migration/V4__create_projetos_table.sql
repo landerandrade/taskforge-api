@@ -1,9 +1,9 @@
-CREATE TABLE tarefas
+CREATE TABLE projetos
 (
     id               BIGSERIAL PRIMARY KEY,
-    titulo           VARCHAR(255) NOT NULL,
+    nome             VARCHAR(150) NOT NULL,
     descricao        TEXT,
-    status           VARCHAR(20)  NOT NULL DEFAULT 'PENDENTE',
+    usuario_id       BIGINT       NOT NULL REFERENCES usuarios (id),
     data_criacao     TIMESTAMP    NOT NULL DEFAULT NOW(),
     data_atualizacao TIMESTAMP    NOT NULL DEFAULT NOW()
 );
