@@ -9,6 +9,8 @@ public record TarefaRequest(
         @Size(max = 255)
         String titulo,
 
-        String descricao) {
+        String descricao,
+
+        Long projetoId) {
 
 }

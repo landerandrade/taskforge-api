@@ -9,6 +9,7 @@ import com.forgile.taskforge.dto.TarefaResponse;
 import com.forgile.taskforge.model.Tarefa;
 import com.forgile.taskforge.model.Usuario;
 import com.forgile.taskforge.model.enums.TarefaStatus;
+import com.forgile.taskforge.repository.ProjetoRepository;
 import com.forgile.taskforge.repository.TarefaRepository;
 import com.forgile.taskforge.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class TarefaService {
 
     private final TarefaRepository repository;
     private final UsuarioRepository usuarioRepository;
+    private final ProjetoRepository projetoRepository;
 
     public TarefaResponse criar(TarefaRequest request) {
         Tarefa tarefa = new Tarefa();
@@ -29,6 +31,10 @@ public class TarefaService {
         tarefa.setDescricao(request.descricao());
         tarefa.setStatus(TarefaStatus.PENDENTE);
         tarefa.setUsuario(getUsuarioAutenticado());
+        if (request.projetoId() != null) {
+            tarefa.setProjeto(projetoRepository.findById(request.projetoId())
+                    .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Projeto não encontrado")));
+        }
         return TarefaResponse.from(repository.save(tarefa));
     }
 
@@ -47,6 +53,12 @@ public class TarefaService {
         Tarefa tarefa = getTarefa(id);
         tarefa.setTitulo(request.titulo());
         tarefa.setDescricao(request.descricao());
+        if (request.projetoId() != null) {
+            tarefa.setProjeto(projetoRepository.findById(request.projetoId())
+                    .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Projeto não encontrado")));
+        } else {
+            tarefa.setProjeto(null);
+        }
         return TarefaResponse.from(repository.save(tarefa));
     }
 

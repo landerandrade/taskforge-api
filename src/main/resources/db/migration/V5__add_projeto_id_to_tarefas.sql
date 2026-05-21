@@ -1,0 +1,2 @@
+ALTER TABLE tarefas
+    ADD COLUMN projeto_id BIGINT NULL REFERENCES projetos (id) ON DELETE SET NULL;

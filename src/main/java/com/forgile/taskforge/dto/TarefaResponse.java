@@ -11,7 +11,9 @@ public record TarefaResponse(
         String descricao,
         TarefaStatus status,
         LocalDateTime dataCriacao,
-        LocalDateTime dataAtualizacao
+        LocalDateTime dataAtualizacao,
+        Long projetoId,
+        String projetoNome
 ) {
 
     public static TarefaResponse from(Tarefa tarefa) {
@@ -21,7 +23,9 @@ public record TarefaResponse(
                 tarefa.getDescricao(),
                 tarefa.getStatus(),
                 tarefa.getDataCriacao(),
-                tarefa.getDataAtualizacao()
+                tarefa.getDataAtualizacao(),
+                tarefa.getProjeto() != null ? tarefa.getProjeto().getId() : null,
+                tarefa.getProjeto() != null ? tarefa.getProjeto().getNome() : null
         );
     }
 }
