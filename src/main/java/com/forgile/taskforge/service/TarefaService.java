@@ -1,9 +1,9 @@
 package com.forgile.taskforge.service;
 
-import java.util.List;
 import java.util.Objects;
 
 import com.forgile.taskforge.config.ApiException;
+import com.forgile.taskforge.dto.PageResponse;
 import com.forgile.taskforge.dto.TarefaRequest;
 import com.forgile.taskforge.dto.TarefaResponse;
 import com.forgile.taskforge.model.Tarefa;
@@ -13,6 +13,8 @@ import com.forgile.taskforge.repository.ProjetoRepository;
 import com.forgile.taskforge.repository.TarefaRepository;
 import com.forgile.taskforge.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -38,11 +40,12 @@ public class TarefaService {
         return TarefaResponse.from(repository.save(tarefa));
     }
 
-    public List<TarefaResponse> listar() {
+    public PageResponse<TarefaResponse> listar(TarefaStatus status, Pageable pageable) {
         String email = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getName();
-        return repository.findByUsuarioEmail(email).stream()
-                .map(TarefaResponse::from)
-                .toList();
+        Page<Tarefa> page = status != null
+                ? repository.findByUsuarioEmailAndStatus(email, status, pageable)
+                : repository.findByUsuarioEmail(email, pageable);
+        return PageResponse.from(page.map(TarefaResponse::from));
     }
 
     public TarefaResponse buscarPorId(Long id) {
