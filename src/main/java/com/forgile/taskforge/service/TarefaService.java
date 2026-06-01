@@ -40,11 +40,19 @@ public class TarefaService {
         return TarefaResponse.from(repository.save(tarefa));
     }
 
-    public PageResponse<TarefaResponse> listar(TarefaStatus status, Pageable pageable) {
+    public PageResponse<TarefaResponse> listar(TarefaStatus status, Long projetoId, Pageable pageable) {
         String email = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getName();
-        Page<Tarefa> page = status != null
-                ? repository.findByUsuarioEmailAndStatus(email, status, pageable)
-                : repository.findByUsuarioEmail(email, pageable);
+
+        Page<Tarefa> page;
+        if (status != null && projetoId == null) {
+            page = repository.findByUsuarioEmailAndStatus(email, status, pageable);
+        } else if (projetoId != null && status == null) {
+            page = repository.findByUsuarioEmailAndProjetoId(email, projetoId, pageable);
+        } else if (status != null) {
+            page = repository.findByUsuarioEmailAndStatusAndProjetoId(email, status, projetoId, pageable);
+        } else {
+            page = repository.findByUsuarioEmail(email, pageable);
+        }
         return PageResponse.from(page.map(TarefaResponse::from));
     }
 

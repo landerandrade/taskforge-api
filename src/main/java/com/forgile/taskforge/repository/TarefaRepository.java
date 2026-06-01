@@ -11,4 +11,8 @@ public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
     Page<Tarefa> findByUsuarioEmail(String email, Pageable pageable);
 
     Page<Tarefa> findByUsuarioEmailAndStatus(String email, TarefaStatus status, Pageable pageable);
+
+    Page<Tarefa> findByUsuarioEmailAndProjetoId(String email, Long projetoId, Pageable pageable);
+
+    Page<Tarefa> findByUsuarioEmailAndStatusAndProjetoId(String email, TarefaStatus status, Long projetoId, Pageable pageable);
 }

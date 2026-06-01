@@ -38,8 +38,9 @@ public class TarefaController {
     @GetMapping
     public ApiResponse<PageResponse<TarefaResponse>> listar(
             @RequestParam(required = false) TarefaStatus status,
+            @RequestParam(required = false) Long projetoId,
             @PageableDefault(sort = "titulo") Pageable pageable) {
-        return ApiResponse.ok(service.listar(status, pageable));
+        return ApiResponse.ok(service.listar(status, projetoId, pageable));
     }
 
     @GetMapping("/{id}")
