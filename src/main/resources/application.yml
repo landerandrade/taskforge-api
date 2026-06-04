@@ -12,6 +12,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha
+    operations-sorter: alpha
 jwt:
   secret: forgile-taskforge-secret-key-minimo-256-bits-para-hmac-sha256-ok
   expiration-ms: 86400000
