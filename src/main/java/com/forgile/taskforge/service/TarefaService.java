@@ -64,6 +64,9 @@ public class TarefaService {
         Tarefa tarefa = getTarefa(id);
         tarefa.setTitulo(request.titulo());
         tarefa.setDescricao(request.descricao());
+        if (request.status() != null) {
+            tarefa.setStatus(request.status());
+        }
         if (request.projetoId() != null) {
             tarefa.setProjeto(projetoRepository.findById(request.projetoId())
                     .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Projeto não encontrado")));

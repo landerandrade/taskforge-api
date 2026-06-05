@@ -9,7 +9,7 @@ import com.forgile.taskforge.dto.UsuarioRequest;
 import com.forgile.taskforge.model.Usuario;
 import com.forgile.taskforge.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,7 +26,8 @@ public class UsuarioService implements UserDetailsService {
     private final JwtUtil jwtUtil;
 
     @Override
-    public UserDetails loadUserByUsername(@NonNull String email) throws UsernameNotFoundException {
+    @NullMarked
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = repository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado: " + email));
 

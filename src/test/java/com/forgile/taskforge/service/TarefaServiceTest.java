@@ -61,7 +61,7 @@ public class TarefaServiceTest {
 
     @Test
     void criar_deveSalvarTarefa() {
-        var request = new TarefaRequest("Tarefa teste", null, null);
+        var request = new TarefaRequest("Tarefa teste", null, null, null);
 
         when(usuarioRepository.findByEmail(any())).thenReturn(Optional.of(new Usuario()));
         when(tarefaRepository.save(any(Tarefa.class))).thenReturn(tarefaFake());
@@ -74,7 +74,7 @@ public class TarefaServiceTest {
 
     @Test
     void criar_deveLancarExcecao_quandoProjetoNaoExiste() {
-        var request = new TarefaRequest("Tarefa teste", null, 99L);
+        var request = new TarefaRequest("Tarefa teste", null, 99L, null);
 
         when(usuarioRepository.findByEmail(any())).thenReturn(Optional.of(new Usuario()));
         when(projetoRepository.findById(99L)).thenReturn(Optional.empty());

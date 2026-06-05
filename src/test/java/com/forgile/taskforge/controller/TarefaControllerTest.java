@@ -63,7 +63,7 @@ public class TarefaControllerTest {
         when(tarefaService.criar(any())).thenReturn(tarefaFake());
 
         var body = objectMapper.writeValueAsString(
-                new TarefaRequest("Tarefa teste", null, null));
+                new TarefaRequest("Tarefa teste", null, null, null));
 
         mockMvc.perform(post("/tarefas")
                         .contentType(APPLICATION_JSON)
@@ -76,7 +76,7 @@ public class TarefaControllerTest {
     @Test
     void criar_deveRetornar400_quandoTituloVazio() throws Exception {
         var body = objectMapper.writeValueAsString(
-                new TarefaRequest("", null, null));
+                new TarefaRequest("", null, null, null));
 
         mockMvc.perform(post("/tarefas")
                         .contentType(APPLICATION_JSON)
